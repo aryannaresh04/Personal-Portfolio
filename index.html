@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aryan Naresh</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -15,26 +18,31 @@
             <a href="#" class="logo-link">Aryan's Portfolio</a>
             <div class="nav-links">
                 <a href="#about" class="tablink">About Me</a>
-                <a href="#projects" class="tablink">Projects</a>
                 <a href="#experience" class="tablink">Experience</a>
+                <a href="#projects" class="tablink">Projects</a>
                 <a href="#education" class="tablink">Education</a>
-                <a href="#achievements" class="tablink">Achievements</a>
                 <a href="#skills" class="tablink">Skills</a>
+                <a href="#achievements" class="tablink">Achievements</a>
             </div>
         </div>
     </nav>
 
     <!-- Header Section -->
     <header>
+        <canvas id="hero-particles" aria-hidden="true"></canvas>
         <div class="header-left">
-            <img src="pfp.jpg" alt="Profile Image" class="profile-image">
+            <img src="pfp.jpg" alt="Aryan Naresh profile photo" class="profile-image">
         </div>
         <div class="header-right">
             <h1>Aryan Naresh</h1>
-            <p>3rd Year Student at VIT Vellore</p>
+            <p><span id="typed-tagline"></span><span class="typing-cursor" aria-hidden="true"></span><span class="sr-only">Software Engineer | SDE Intern @ Siemens | CS @ VIT</span></p>
+            <div class="hero-cta">
+                <a href="#projects" class="btn btn-primary">View Projects</a>
+                <a href="mailto:aryannaresh04@gmail.com" class="btn btn-secondary">Contact Me</a>
+            </div>
             <div class="social-links">
                 <a href="https://github.com/aryannaresh04"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/aryan-naresh-0a675229b/"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.linkedin.com/in/aryan-naresh/"><i class="fab fa-linkedin"></i></a>
                 <a href="mailto:aryannaresh04@gmail.com"><i class="fas fa-envelope"></i></a>
             </div>
         </div>
@@ -44,16 +52,40 @@
     <section id="about">
         <div class="container">
             <h2 class="section-title">About Me</h2>
-            <p>I am Aryan Naresh, a dedicated second-year student at VIT Vellore pursuing Computer Science with a specialization in Information Security. My passion for technology began with a fundamental curiosity about computational systems and software development, which has evolved into a comprehensive interest in various computer science domains.<br>
+            <p>I'm Aryan Naresh, a Computer Science engineer specializing in Information Security at VIT Vellore, currently working as a Software Development Engineering Intern on the PLM team at Siemens Digital Industries Software. I build backend tools and services that are meant to run in production, not just demo well: real-time monitoring over Server-Sent Events, dependency-graph failure analysis, and hardening tools against penetration-test findings for air-gapped client deployments.<br><br>
 
-                Throughout my academic journey, I've built strong foundations in core computer science concepts including data structures, algorithms, object-oriented programming, and web development. I enjoy solving complex problems through efficient code and developing applications that deliver meaningful solutions. While my specialization includes information security aspects, my broader focus remains on becoming a versatile software developer capable of tackling diverse technological challenges.<br>
-                
-                I actively participate in coding competitions, hackathons, and collaborative projects to enhance my practical skills and apply theoretical knowledge in real-world scenarios. These experiences have helped me develop proficiency in multiple programming languages and frameworks while strengthening my analytical thinking and problem-solving abilities.<br>
-                
-                My goal is to grow into a skilled software developer who can create innovative, efficient, and scalable solutions. I'm particularly interested in exploring areas such as full-stack development, cloud computing, and artificial intelligence, while maintaining awareness of security best practices in software design.<br>
-                
-                When I'm not coding, I enjoy exploring new technologies, contributing to open-source projects, and connecting with fellow tech enthusiasts. I believe that continuous learning and practical application are essential for success in the dynamic field of computer science.
+                My projects range from ML-driven security systems to applied cryptography and blockchain. I built a SOC-style network intrusion detector that layers Random Forest and Isolation Forest models behind a FastAPI triage dashboard, a file-encryption tool pairing AES-256-GCM with Shamir's Secret Sharing for threshold key recovery, and an anti-counterfeiting system that verifies products against Ethereum smart contracts via QR codes. I also ship products end to end: React/Vite frontends, Node.js and FastAPI backends, ML microservices, and an LLM-powered resume agent that rewrites bullets and scrapes matching jobs.<br><br>
+
+                Before Siemens, I was a Software Development Engineering Intern at CoreEL Technologies, building Qt/C++ flight instrument interfaces and a 3D aircraft simulator, plus a serial-port diagnostics tool with live data visualization.<br><br>
+
+                I'm looking for SDE and security engineering roles where I can keep shipping systems that hold up under real-world constraints.
                 </p>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+        <div class="container">
+            <h2 class="section-title">Experience</h2>
+            <div class="experience-item animate__animated">
+                <h3 class="company">Siemens Digital Industries Software | SDE Intern, PLM Division</h3>
+                <p class="date">May 2026 - July 2026</p>
+                <ul>
+                    <li>Built TC Monitor, a Python/FastAPI tool tracking live Teamcenter service health via Server-Sent Events, auto-detecting services across 18 categories with start/stop/restart control and single-file PyInstaller packaging.</li>
+                    <li>Engineered multi-environment comparison (concurrent async fetch into a service diff matrix) and a dependency-graph engine that proactively flags downstream Teamcenter impact when an upstream service fails.</li>
+                    <li>Hardened the tool for air-gapped client deployment: remediated black-box penetration-test findings (input caps, request-body validation, disabled API schema exposure) plus embedded version metadata and atomic state writes.</li>
+                    <li>Developed a Mendix governance layer over TC Monitor that consumes its REST snapshot to auto-create/resolve incidents, track monthly SLA compliance, and alert engineers with a full audit trail.</li>
+                </ul>
+            </div>
+            <div class="experience-item animate__animated">
+                <h3 class="company">CoreEL Technologies | SDE Intern</h3>
+                <p class="date">May 2025 - July 2025</p>
+                <ul>
+                    <li>Engineered a 2D flight instrument interface and 3D aircraft simulator in Qt (C++/QML, Qt Quick, Widgets), with interactive animations and 3D models prototyped in Figma and Qt Design Studio.</li>
+                    <li>Built a serial-port communication tool in C++ with QSerialPort, featuring live Qt Charts data visualization, RTS/CTS hardware flow control, and socat-based virtual-port testing.</li>
+                    <li>Developed supporting Qt utilities: a text editor (file I/O, formatting, dark mode) and a CSV-authenticated login module with input validation.</li>
+                </ul>
+            </div>
         </div>
     </section>
 
@@ -63,55 +95,52 @@
             <h2 class="section-title">Projects</h2>
             <div class="project-grid">
                 <div class="project-card animate__animated">
-                    <h3>Project 1: Resume Improvement & Job Scraper Agent</h3>
-                    <p>Built an AI-powered full-stack application that scrapes job
-listings based on the user’s resume profile and analyzes resumes using NLP to evaluate job-role fit. The system
-matches resume content with role-specific requirements and generates actionable suggestions to improve ATS
-compatibility and job relevance. Developed using Python and React/Next.js.</p>
+                    <h3>Network Intrusion &amp; Traffic Anomaly Detector</h3>
+                    <p class="project-stack">Python &middot; scikit-learn &middot; FastAPI &middot; NSL-KDD</p>
+                    <p>SOC-style intrusion detector on the NSL-KDD dataset, layering a Random Forest multi-class classifier with an Isolation Forest anomaly detector to flag both known attacks and novel/zero-day variants. Served through a FastAPI backend with a severity-ranked triage dashboard where analysts assign, resolve, escalate, or mark false positives, with state persisted to SQLite.</p>
+                </div>
+                <div class="project-card animate__animated">
+                    <h3>Bangalore Traffic Prediction System</h3>
+                    <p class="project-stack">Python &middot; scikit-learn &middot; Flask &middot; Node.js &middot; React/Vite</p>
+                    <p>Full-stack traffic congestion predictor spanning a React/Vite + Leaflet frontend, a Node.js/Express API, and a Python/Flask ML microservice. Trained a Random Forest classifier on ~8,900 records across 17 features and built congestion-aware route planning with Dijkstra's algorithm over 30 areas, weighting edges by predicted congestion.</p>
+                </div>
+                <div class="project-card animate__animated">
+                    <h3>Resume Improvement &amp; Job Scraper Agent</h3>
+                    <p class="project-stack">Python &middot; FastAPI &middot; spaCy &middot; Gemini LLM &middot; Next.js</p>
+                    <p>Full-stack resume agent that parses PDF/DOCX resumes with spaCy, scores skill match against a job description, uses the Gemini LLM to rewrite bullets and draft cover letters, and scrapes matching jobs by skillset via JobSpy.</p>
                     <div class="project-links">
                         <a href="https://github.com/aryannaresh04/resume-improvement-job-scrapper"><i class="fab fa-github"></i> GitHub</a>
-                        <a href="https://github.com/aryannaresh04/resume-improvement-job-scrapper?tab=readme-ov-file#resume-improvement--job-scraper-agent"><i class=""></i> Live Demo</a>
                     </div>
                 </div>
                 <div class="project-card animate__animated">
-                    <h3>Project 2: Blockchain-Based QR Product Authentication</h3>
-                    <p>Built a secure product authentication platform with QR
-code verification and smart contracts. Enabled real-time traceability and integrated full-stack components to
-prevent counterfeiting.</p>
+                    <h3>Hybrid Encryption System</h3>
+                    <p class="project-stack">Python &middot; AES-256-GCM &middot; Shamir's Secret Sharing</p>
+                    <p>File-encryption tool pairing AES-256-GCM authenticated encryption (256-bit key, per-file nonce) with Shamir's Secret Sharing for key protection. Splits the AES key into a 3-of-5 threshold share set distributed as QR codes, so any three of five shares reconstruct the key and no single share reveals it.</p>
+                </div>
+                <div class="project-card animate__animated">
+                    <h3>Blockchain-Based QR Code Product Authentication</h3>
+                    <p class="project-stack">Solidity &middot; Truffle &middot; Ganache &middot; Web3.js &middot; Node.js &middot; MetaMask</p>
+                    <p>Anti-counterfeiting system that registers products on an Ethereum blockchain and verifies authenticity by scanning QR codes against on-chain records. Built with Solidity smart contracts deployed via Truffle to a Ganache local chain, with a Web3.js frontend and MetaMask wallet integration for transaction signing.</p>
                     <div class="project-links">
                         <a href="https://github.com/aryannaresh04/Blockchain-Based-QR-Code-Product-Authentication"><i class="fab fa-github"></i> GitHub</a>
-                        <a href="https://github.com/aryannaresh04/Blockchain-Based-QR-Code-Product-Authentication?tab=readme-ov-file#blockchain-based-qr-code-product-authentication"><i class="fas fa-external-link-alt"></i> Live Demo</a>
                     </div>
                 </div>
                 <div class="project-card animate__animated">
-                    <h3>Project 3: QT Serial Port with Live Data Visualization App</h3>
-                    <p>The application provides real-time communication with serial devices, live data visualization using charts, and logging capabilities. It is built using Qt Creator and utilizes various Qt modules for GUI, serial communication, charting, and file handling.</p>
+                    <h3>Qt Serial Port Tool with Live Data Visualization</h3>
+                    <p class="project-stack">C++ &middot; Qt Widgets &middot; QSerialPort &middot; Qt Charts &middot; socat</p>
+                    <p>Desktop tool for real-time communication with serial devices: live incoming data plotted with Qt Charts, timestamped logging to file, pre-transfer handshaking, and socat-based virtual ports for hardware-free testing. Built during my CoreEL internship.</p>
                     <div class="project-links">
                         <a href="https://github.com/aryannaresh04/QT-Serial-Port-with-Live-Data-Visualization-App"><i class="fab fa-github"></i> GitHub</a>
-                        <a href="https://github.com/aryannaresh04/QT-Serial-Port-with-Live-Data-Visualization-App?tab=readme-ov-file#qt-serial-port-with-live-data-visualization"><i class="fas fa-external-link-alt"></i> Live Demo</a>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Experience Section -->
-    <section id="experience">
-        <div class="container">
-            <h2 class="section-title">Experience</h2>
-            <div class="experience-item animate__animated">
-                <h3 class="company">CoreEL Technologies Bangalore</h3>
-                <p class="date">May 2025 - July 2025</p>
-                <ul>
-                    <li>Role: SDE Intern</li>
-                    <li>Designed and implemented 2D Flight Embedded System and 3D Plane Simulator using Figma, Qt Design Studio, and QML, integrating animations, bindings, and 3D models (Sketchfab) for interactive simulations.</li>
-<li>Developed a Notepad Application with Qt Widgets, implementing file management, text formatting, and dark mode using QFile, QTextStream, and .qss stylesheets.</li>
-<li>Built a secure Login Page with CSV-based authentication, UI validation (QLineEdit, QMessageBox), and CoreEL branding using QPixmap.</li>
-<li>Created a Serial Port Communication App with real-time data visualization using QSerialPort and Qt Charts, incorporating hardware handshaking (RTS/CTS) and virtual port testing with socat.
-Gained hands-on experience with Qt (Core, Widgets, Charts, Quick/QML), event-driven programming (signal-slot mechanism), CMake cross-platform builds, and UI/UX prototyping (Figma + Qt Bridge).</li>
-
-                    <a href="https://github.com/aryannaresh04/QT-Serial-Port-with-Live-Data-Visualization-App"><i class="fab fa-github"></i> GitHub</a>
-                </ul>
+                <div class="project-card animate__animated">
+                    <h3>Personal Portfolio Website</h3>
+                    <p class="project-stack">HTML &middot; CSS &middot; JavaScript</p>
+                    <p>This site: a responsive single-page portfolio with scroll-driven animations, an auto-highlighting sticky navbar, and a card-based layout, built from scratch with no frameworks.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/aryannaresh04/Personal-Portfolio"><i class="fab fa-github"></i> GitHub</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -121,14 +150,77 @@ Gained hands-on experience with Qt (Core, Widgets, Charts, Quick/QML), event-dri
         <div class="container">
             <h2 class="section-title">Education</h2>
             <div class="education-item animate__animated">
-                <h3 class="institution">VIT Vellore</h3>
+                <h3 class="institution">Vellore Institute of Technology</h3>
                 <p class="date">2023 - 2027</p>
-                <p>Computer Science with specialization in Information Security, B.Tech</p>
+                <p>B.Tech Computer Science &amp; Engineering, specialization in Information Security &middot; CGPA: 8.16</p>
             </div>
             <div class="education-item animate__animated">
-                <h3 class="institution">Delhi Public School Bangalore North</h3>
-                <p class="date">2016 - 2022</p>
-                <p>Secondary and Senior Secondary Education</p>
+                <h3 class="institution">Delhi Public School, Bangalore North</h3>
+                <p class="date">Graduated 2022</p>
+                <p>12th Grade Science (PCM) &middot; 86.6%</p>
+            </div>
+            <div class="education-item animate__animated">
+                <h3 class="institution">Delhi Public School, Bangalore North</h3>
+                <p class="date">Graduated 2020</p>
+                <p>10th Grade &middot; 91.8%</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category animate__animated">
+                    <h3>Languages</h3>
+                    <ul>
+                        <li>Python</li>
+                        <li>Java</li>
+                        <li>C</li>
+                        <li>C++</li>
+                        <li>JavaScript</li>
+                        <li>HTML/CSS</li>
+                        <li>QML</li>
+                        <li>SQL</li>
+                    </ul>
+                </div>
+                <div class="skill-category animate__animated">
+                    <h3>Frameworks &amp; Libraries</h3>
+                    <ul>
+                        <li>React</li>
+                        <li>Next.js</li>
+                        <li>Node.js</li>
+                        <li>Flask</li>
+                        <li>FastAPI</li>
+                        <li>Qt</li>
+                        <li>Pandas</li>
+                        <li>NumPy</li>
+                    </ul>
+                </div>
+                <div class="skill-category animate__animated">
+                    <h3>Tools &amp; Technologies</h3>
+                    <ul>
+                        <li>Git/GitHub</li>
+                        <li>MySQL</li>
+                        <li>Qt Design Studio</li>
+                        <li>PyInstaller</li>
+                        <li>Mendix</li>
+                        <li>AWS Cloud</li>
+                        <li>Wireshark</li>
+                        <li>Metasploit</li>
+                    </ul>
+                </div>
+                <div class="skill-category animate__animated">
+                    <h3>Security</h3>
+                    <ul>
+                        <li>Cryptography (AES, RSA, ECC, Paillier)</li>
+                        <li>VAPT</li>
+                        <li>Network Security</li>
+                        <li>Data Privacy</li>
+                        <li>Penetration Testing</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
@@ -137,84 +229,31 @@ Gained hands-on experience with Qt (Core, Widgets, Charts, Quick/QML), event-dri
         <div class="container">
           <h2 class="section-title">Achievements</h2>
           <div class="achievements-container">
-            <!-- Achievement items go here -->
             <div class="achievement-item animate__animated">
               <h3 class="achievement-title">JEE Mains 2023</h3>
               <p class="date">April 2023</p>
-              <p class="achievement-description">Scored a total of 95%ile in JEE Mains 2023.</p>
+              <p class="achievement-description">Scored 94th percentile in JEE Mains 2023.</p>
             </div>
-            
-            <!-- Add more achievement items as needed -->
+
             <div class="achievement-item animate__animated">
               <h3 class="achievement-title">Comedk 2023</h3>
               <p class="date">April 2023</p>
-              <p class="achievement-description">Obtained rank of 2043 in the Comedk Examination, also scoring 99%ile in the chemistry section.</p>
+              <p class="achievement-description">Obtained a rank of 4041 in the Comedk Examination, scoring 99%ile in the chemistry section.</p>
             </div>
 
-              
-
               <div class="achievement-item animate__animated">
-                <h3 class="achievement-title">ASSET Talent Exam Winner</h3>
-                <p class="date">April 2019</p>
-                <p class="achievement-description">Qualified for the ASSET Scholarship.</p>
-              </div>
-
-              <div class="achievement-item animate__animated">
-                <h3 class="achievement-title">Finished 6th in the F1 in Schools 2019 National Finals</h3>
-                <p class="date">March 2019</p>
-                <p class="achievement-description">Qualified for the F1 in schools National Finals and finished 6th place out of 100 teams. Also recieved the best team presentation award for the same.</p>
-              </div>
-
-              <div class="achievement-item animate__animated">
-                <h3 class="achievement-title">Obtained Trinity Grade 3 in Keyboard</h3>
-                <p class="date">March 2018</p>
-                <p class="achievement-description">Passed the Trinity Grade 3 test for keyboard.</p>
+                <h3 class="achievement-title">F1 in Schools 2019 National Finals: 6th Place</h3>
+                <p class="achievement-description">Qualified for the F1 in Schools National Finals and finished 6th out of 100 teams, also receiving the best team presentation award.</p>
               </div>
           </div>
         </div>
       </section>
       
 
-    <!-- Skills Section -->
-    <section id="skills">
-        <div class="container">
-            <h2 class="section-title">Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-category animate__animated">
-                    <h3>Programming Languages</h3>
-                    <ul>
-                        <li>C/C++</li>
-                        <li>Python</li>
-                        <li>Java</li>
-                        <li>HTML/CSS</li>
-                        <li>JavaScript</li>
-
-                    </ul>
-                </div>
-                <div class="skill-category animate__animated">
-                    <h3>Frameworks & Libraries</h3>
-                    <ul>
-                        <li>React</li>
-                        <li>Node.js/Express.js</li>
-                        <li>Pandas/NumPy</li>
-                    </ul>
-                </div>
-                <div class="skill-category animate__animated">
-                    <h3>Tools & Technologies</h3>
-                    <ul>
-                        <li>Git/GitHub</li>
-                        <li>MySQL</li>
-                        <li>Figma</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2025 Aryan Naresh. All rights reserved.</p>
+            <p>&copy; 2026 Aryan Naresh. All rights reserved.</p>
         </div>
     </footer>
 

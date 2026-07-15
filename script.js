@@ -1,207 +1,156 @@
+const tabLinks = document.querySelectorAll('.tablink');
+const sections = document.querySelectorAll('section');
+const navbar = document.querySelector('.topnav');
+
+// Smooth scroll for all in-page anchor links (nav tabs, logo, hero CTA)
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-      e.preventDefault();
-      const targetId = this.getAttribute('href');
-      const targetElement = document.querySelector(targetId);
-      window.scrollTo({
-        top: targetElement.offsetTop,
-        behavior: 'smooth'
-      });
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const targetElement = document.querySelector(this.getAttribute('href'));
+    if (!targetElement) return;
+    window.scrollTo({
+      top: targetElement.offsetTop - 50,
+      behavior: 'smooth'
     });
   });
-  
-  
-  const animateOnScroll = () => {
-    const animatedElements = document.querySelectorAll('.project-card.animate__animated, .experience-item.animate__animated, .education-item.animate__animated, .skill-category.animate__animated');
-    animatedElements.forEach(element => {
-      const elementPosition = element.getBoundingClientRect().top;
-      const screenPosition = window.innerHeight / 1.3;
-      if (elementPosition < screenPosition) {
-        if (!element.classList.contains('animate__fadeInUp')) {
-          element.classList.add('animate__fadeInUp');
-        }
+});
+
+// Fade cards in as they scroll into view (IntersectionObserver keeps it off the scroll path)
+document.documentElement.classList.add('js');
+
+const initRevealOnScroll = () => {
+  const revealElements = document.querySelectorAll('.project-card, .experience-item, .education-item, .skill-category, .achievement-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        observer.unobserve(entry.target);
       }
     });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  revealElements.forEach(el => observer.observe(el));
+};
+
+// Shrink navbar and highlight the tab for the section in view
+const handleScroll = () => {
+  if (window.scrollY > 100) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+
+  const scrollPosition = window.scrollY;
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 100;
+    const sectionBottom = sectionTop + section.offsetHeight;
+    if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+      tabLinks.forEach(link => link.classList.remove('active'));
+      const currentTab = document.querySelector(`.tablink[href="#${section.id}"]`);
+      if (currentTab) {
+        currentTab.classList.add('active');
+      }
+    }
+  });
+};
+
+window.addEventListener('scroll', handleScroll, { passive: true });
+
+// Type out the hero tagline character by character
+const typeTagline = () => {
+  const taglineTarget = document.getElementById('typed-tagline');
+  if (!taglineTarget) return;
+  const taglineText = 'Software Engineer | SDE Intern @ Siemens | CS @ VIT';
+  let charIndex = 0;
+  const typeNext = () => {
+    if (charIndex <= taglineText.length) {
+      taglineTarget.textContent = taglineText.slice(0, charIndex);
+      charIndex++;
+      setTimeout(typeNext, 45);
+    }
   };
-  
-  
-  document.addEventListener('DOMContentLoaded', () => {
-    
-    animateOnScroll();
-    
-    window.addEventListener('scroll', animateOnScroll);
-    
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach(card => {
-      card.addEventListener('mouseenter', () => {
-        card.classList.add('animate__pulse');
-      });
-      card.addEventListener('mouseleave', () => {
-        card.classList.remove('animate__pulse');
-      });
+  setTimeout(typeNext, 700);
+};
+
+// Faint drifting particle field in the hero, connected by lines when close
+const initHeroParticles = () => {
+  const canvas = document.getElementById('hero-particles');
+  if (!canvas) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const ctx = canvas.getContext('2d');
+  const hero = canvas.parentElement;
+  let particles = [];
+
+  const resize = () => {
+    canvas.width = hero.offsetWidth;
+    canvas.height = hero.offsetHeight;
+    const count = Math.min(70, Math.floor(canvas.width / 22));
+    particles = Array.from({ length: count }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: (Math.random() - 0.5) * 0.35,
+      r: Math.random() * 1.6 + 0.6
+    }));
+  };
+
+  const linkDistance = 130;
+
+  const frame = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(56, 189, 248, 0.4)';
+      ctx.fill();
     });
-  });
-  
-  
-  const tabLinks = document.querySelectorAll('.tablink');
-  
-  
-  function setActiveTab() {
-    
-    const scrollPosition = window.scrollY;
-    
-    const sections = document.querySelectorAll('section');
-    
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop - 100;
-      const sectionBottom = sectionTop + section.offsetHeight;
-      if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-        
-        tabLinks.forEach(link => {
-          link.classList.remove('active');
-        });
-        
-        const currentTab = document.querySelector(`.tablink[href="#${section.id}"]`);
-        if (currentTab) {
-          currentTab.classList.add('active');
+
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.hypot(dx, dy);
+        if (dist < linkDistance) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(56, 189, 248, ${0.14 * (1 - dist / linkDistance)})`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
         }
       }
-    });
-  }
-  
-  
-  tabLinks.forEach(link => {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      const targetId = this.getAttribute('href');
-      const targetElement = document.querySelector(targetId);
-      window.scrollTo({
-        top: targetElement.offsetTop - 50,
-        behavior: 'smooth'
-      });
-      tabLinks.forEach(tab => tab.classList.remove('active'));
-      this.classList.add('active');
-    });
-  });
-  
-  
-  window.addEventListener('scroll', setActiveTab);
-  
-  
-  document.addEventListener('DOMContentLoaded', () => {
-    
-    if (tabLinks.length > 0) {
-      tabLinks[0].classList.add('active');
     }
-    
-    
-    if (window.location.hash) {
-      const targetElement = document.querySelector(window.location.hash);
-      if (targetElement) {
-        setTimeout(() => {
-          window.scrollTo({
-            top: targetElement.offsetTop - 50,
-            behavior: 'smooth'
-          });
-          
-          const currentTab = document.querySelector(`.tablink[href="${window.location.hash}"]`);
-          if (currentTab) {
-            tabLinks.forEach(tab => tab.classList.remove('active'));
-            currentTab.classList.add('active');
-          }
-        }, 100);
-      }
-    }
-  });
-  
 
-  tabLinks.forEach(link => {
-    link.addEventListener('mouseenter', () => {
-      link.classList.add('animate__animated', 'animate__pulse');
-    });
-    link.addEventListener('mouseleave', () => {
+    requestAnimationFrame(frame);
+  };
+
+  resize();
+  window.addEventListener('resize', resize);
+  requestAnimationFrame(frame);
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  initRevealOnScroll();
+  handleScroll();
+  typeTagline();
+  initHeroParticles();
+
+  // Jump to the section in the URL hash on load
+  if (window.location.hash) {
+    const targetElement = document.querySelector(window.location.hash);
+    if (targetElement) {
       setTimeout(() => {
-        link.classList.remove('animate__animated', 'animate__pulse');
-      }, 500);
-    });
-  });
-  
-  
-  const tabLinks = document.querySelectorAll('.tablink');
-  const sections = document.querySelectorAll('section');
-  const navbar = document.querySelector('.topnav');
-  
-  
-  function handleScroll() {
-    
-    if (window.scrollY > 100) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
+        window.scrollTo({
+          top: targetElement.offsetTop - 50,
+          behavior: 'smooth'
+        });
+      }, 100);
     }
-    
-    
-    const scrollPosition = window.scrollY;
-    
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop - 100;
-      const sectionBottom = sectionTop + section.offsetHeight;
-      if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-        
-        tabLinks.forEach(link => {
-          link.classList.remove('active');
-          link.classList.remove('animate__pulse');
-        });
-        
-        const currentTab = document.querySelector(`.tablink[href="#${section.id}"]`);
-        if (currentTab) {
-          currentTab.classList.add('active');
-          currentTab.classList.add('animate__animated', 'animate__pulse');
-        }
-      }
-    });
   }
-  
-  
-  const navLinks = document.querySelectorAll('.nav-link');
-  
-  
-  function setActiveLink() {
-    const scrollPosition = window.scrollY;
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop - 100;
-      const sectionBottom = sectionTop + section.offsetHeight;
-      if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-        const currentId = section.getAttribute('id');
-        navLinks.forEach(link => {
-          link.classList.remove('active');
-          if (link.getAttribute('href') === `#${currentId}`) {
-            link.classList.add('active');
-          }
-        });
-      }
-    });
-  }
-  
-  
-  navLinks.forEach(link => {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      const targetId = this.getAttribute('href');
-      const targetElement = document.querySelector(targetId);
-      window.scrollTo({
-        top: targetElement.offsetTop - 70,
-        behavior: 'smooth'
-      });
-    });
-  });
-  
-  
-  window.addEventListener('scroll', setActiveLink);
-  
-  
-  document.addEventListener('DOMContentLoaded', setActiveLink);
-
-  const animatedElements = document.querySelectorAll('.project-card.animate__animated, .experience-item.animate__animated, .education-item.animate__animated, .skill-category.animate__animated, .achievement-item.animate__animated');
-
-  
+});
