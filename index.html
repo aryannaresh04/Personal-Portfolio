@@ -52,9 +52,9 @@
     <section id="about">
         <div class="container">
             <h2 class="section-title">About Me</h2>
-            <p>I'm Aryan Naresh, a Computer Science engineer specializing in Information Security at VIT Vellore, currently working as a Software Development Engineering Intern on the PLM team at Siemens Digital Industries Software. I build backend tools and services that are meant to run in production, not just demo well: real-time monitoring over Server-Sent Events, dependency-graph failure analysis, and hardening tools against penetration-test findings for air-gapped client deployments.<br><br>
+            <p>I'm Aryan Naresh, a Computer Science engineer specializing in Information Security at VIT Vellore. From May to July 2026, I was a Software Development Engineering Intern on the PLM team at Siemens Digital Industries Software, where I built and shipped a monitoring tool to a live enterprise client. I build backend tools and services that are meant to run in production, not just demo well: real-time monitoring over Server-Sent Events, dependency-graph failure analysis, and hardening tools against penetration-test findings for air-gapped client deployments.<br><br>
 
-                My projects range from ML-driven security systems to applied cryptography and blockchain. I built a SOC-style network intrusion detector that layers Random Forest and Isolation Forest models behind a FastAPI triage dashboard, a file-encryption tool pairing AES-256-GCM with Shamir's Secret Sharing for threshold key recovery, and an anti-counterfeiting system that verifies products against Ethereum smart contracts via QR codes. I also ship products end to end: React/Vite frontends, Node.js and FastAPI backends, ML microservices, and an LLM-powered resume agent that rewrites bullets and scrapes matching jobs.<br><br>
+                My projects range from systems programming and ML-driven security to applied cryptography and blockchain. I built cachedb, a Redis-compatible persistent key-value store in C++ with a write-ahead log and LSM-tree engine that matches real Redis on durable writes; a ticket booking platform that prevents double-booking with atomic seat holds; and I'm currently researching multilingual scam detection with explainable transformers across 23 languages. I also built a SOC-style network intrusion detector that layers Random Forest and Isolation Forest models behind a FastAPI triage dashboard, a file-encryption tool pairing AES-256-GCM with Shamir's Secret Sharing for threshold key recovery, and an anti-counterfeiting system that verifies products against Ethereum smart contracts via QR codes. Beyond that, I ship products end to end: React/Vite frontends, Node.js and FastAPI backends, ML microservices, and an LLM-powered resume agent that rewrites bullets and scrapes matching jobs.<br><br>
 
                 Before Siemens, I was a Software Development Engineering Intern at CoreEL Technologies, building Qt/C++ flight instrument interfaces and a 3D aircraft simulator, plus a serial-port diagnostics tool with live data visualization.<br><br>
 
@@ -71,19 +71,18 @@
                 <h3 class="company">Siemens Digital Industries Software | SDE Intern, PLM Division</h3>
                 <p class="date">May 2026 - July 2026</p>
                 <ul>
-                    <li>Built TC Monitor, a Python/FastAPI tool tracking live Teamcenter service health via Server-Sent Events, auto-detecting services across 18 categories with start/stop/restart control and single-file PyInstaller packaging.</li>
-                    <li>Engineered multi-environment comparison (concurrent async fetch into a service diff matrix) and a dependency-graph engine that proactively flags downstream Teamcenter impact when an upstream service fails.</li>
-                    <li>Hardened the tool for air-gapped client deployment: remediated black-box penetration-test findings (input caps, request-body validation, disabled API schema exposure) plus embedded version metadata and atomic state writes.</li>
-                    <li>Developed a Mendix governance layer over TC Monitor that consumes its REST snapshot to auto-create/resolve incidents, track monthly SLA compliance, and alert engineers with a full audit trail.</li>
+                    <li>Built and shipped TC Monitor, a Python/FastAPI single-executable tool, to a live enterprise client, cutting Teamcenter service-failure detection from ~5 minutes of manual polling to near-instant by streaming live health for ~75 services across 5 servers over Server-Sent Events.</li>
+                    <li>Fixed a client-reported startup failure, cutting startup from 21.7s to 1.1s by moving a service scan that blocked for 15&ndash;22s out of the code that ran before the server started accepting connections.</li>
+                    <li>Scaled it into a fleet console managing every registered server from one dashboard, with environment comparison and a 71-edge dependency map, so one failed service immediately shows what else it takes down.</li>
+                    <li>Fixed 3 black-box penetration test findings before client deployment (capping list sizes and rejecting duplicates to stop unbounded growth, validating request bodies, and taking the API schema docs offline).</li>
                 </ul>
             </div>
             <div class="experience-item animate__animated">
-                <h3 class="company">CoreEL Technologies | SDE Intern</h3>
+                <h3 class="company">CoreEL Technologies | SDE Intern, Embedded Application Engineering</h3>
                 <p class="date">May 2025 - July 2025</p>
                 <ul>
-                    <li>Engineered a 2D flight instrument interface and 3D aircraft simulator in Qt (C++/QML, Qt Quick, Widgets), with interactive animations and 3D models prototyped in Figma and Qt Design Studio.</li>
-                    <li>Built a serial-port communication tool in C++ with QSerialPort, featuring live Qt Charts data visualization, RTS/CTS hardware flow control, and socat-based virtual-port testing.</li>
-                    <li>Developed supporting Qt utilities: a text editor (file I/O, formatting, dark mode) and a CSV-authenticated login module with input validation.</li>
+                    <li>Designed flight display interfaces in Figma and Qt Design Studio, then built them in Qt (C++/QML): a 5-instrument 2D navigation panel that replays recorded flight data, and a 3D flight instrument simulation.</li>
+                    <li>Built a Qt (C++) serial console that plots and logs incoming data live, reassembling partial reads so no message is cut in half, and tested it without hardware using virtual serial ports.</li>
                 </ul>
             </div>
         </div>
@@ -95,19 +94,71 @@
             <h2 class="section-title">Projects</h2>
             <div class="project-grid">
                 <div class="project-card animate__animated">
-                    <h3>Network Intrusion &amp; Traffic Anomaly Detector</h3>
+                    <h3>cachedb: Redis-Compatible Persistent Key-Value Store</h3>
+                    <p class="project-stack">C++17 &middot; Linux &middot; epoll &middot; CMake &middot; Docker</p>
+                    <ul class="project-points">
+                        <li>Built from scratch in C++; speaks the Redis wire protocol, so stock redis-cli and redis-benchmark run against it unmodified.</li>
+                        <li>Write-ahead log + LSM-tree storage engine: zero confirmed writes lost across 10 mid-write crash tests.</li>
+                        <li>Batched disk syncs (group commit) to make durable writes 22&times; faster (2,058 &rarr; 45,249 ops/sec), on par with real Redis.</li>
+                        <li>Size-tiered compaction cut files checked per lookup from 303 to 9, boosting read throughput 3.2&times;.</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://github.com/aryannaresh04/cachedb"><i class="fab fa-github"></i> GitHub</a>
+                    </div>
+                </div>
+                <div class="project-card animate__animated">
+                    <h3>Network Intrusion and Traffic Anomaly Detector</h3>
                     <p class="project-stack">Python &middot; scikit-learn &middot; FastAPI &middot; NSL-KDD</p>
-                    <p>SOC-style intrusion detector on the NSL-KDD dataset, layering a Random Forest multi-class classifier with an Isolation Forest anomaly detector to flag both known attacks and novel/zero-day variants. Served through a FastAPI backend with a severity-ranked triage dashboard where analysts assign, resolve, escalate, or mark false positives, with state persisted to SQLite.</p>
+                    <ul class="project-points">
+                        <li>Raised detection of unseen attack types on NSL-KDD from 14.5% to 62.9% by pairing a Random Forest with an Isolation Forest trained only on normal traffic.</li>
+                        <li>FastAPI triage dashboard that ranks alerts by severity and keeps analysts' progress through restarts.</li>
+                        <li>Locking so two analysts can't overwrite each other's work.</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://github.com/aryannaresh04/Network-Intrusion-Detection"><i class="fab fa-github"></i> GitHub</a>
+                    </div>
+                </div>
+                <div class="project-card animate__animated">
+                    <h3>Multilingual Scam Detection with Explainable Transformers</h3>
+                    <p class="project-stack">PyTorch &middot; XLM-R &middot; MuRIL &middot; SHLIME</p>
+                    <ul class="project-points">
+                        <li>Ongoing research (2026 &ndash; present): fine-tuning XLM-R and MuRIL to detect scam messages across 23 languages.</li>
+                        <li>Benchmarked against mBERT and a TF-IDF + SVM baseline, with results broken down by Hindi&ndash;English code-mixing.</li>
+                        <li>Designing an attack that makes LIME, SHAP, and SHLIME point to the wrong words while the model still flags the scam.</li>
+                    </ul>
+                </div>
+                <div class="project-card animate__animated">
+                    <h3>Ticket Booking Platform</h3>
+                    <p class="project-stack">Python &middot; FastAPI &middot; PostgreSQL &middot; SQLAlchemy &middot; React &middot; TypeScript</p>
+                    <ul class="project-points">
+                        <li>Prevents double-booking with one atomic SQL update per seat hold; hold expiry is checked on every write, so it stays correct even if cleanup fails.</li>
+                        <li>Time-limited waitlist for freed seats, a live seat map over SSE, and JWT-signed QR tickets.</li>
+                        <li>88 unit and integration tests on real PostgreSQL, verified with mutation testing.</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://github.com/aryannaresh04/ticket-booking-platform"><i class="fab fa-github"></i> GitHub</a>
+                    </div>
                 </div>
                 <div class="project-card animate__animated">
                     <h3>Bangalore Traffic Prediction System</h3>
                     <p class="project-stack">Python &middot; scikit-learn &middot; Flask &middot; Node.js &middot; React/Vite</p>
-                    <p>Full-stack traffic congestion predictor spanning a React/Vite + Leaflet frontend, a Node.js/Express API, and a Python/Flask ML microservice. Trained a Random Forest classifier on ~8,900 records across 17 features and built congestion-aware route planning with Dijkstra's algorithm over 30 areas, weighting edges by predicted congestion.</p>
+                    <ul class="project-points">
+                        <li>Full-stack app: React/Vite + Leaflet frontend, Node.js/Express API, and a Python/Flask ML microservice.</li>
+                        <li>Random Forest congestion classifier trained on ~8,900 records across 17 features.</li>
+                        <li>Congestion-aware route planning with Dijkstra's algorithm over 30 areas, weighting edges by predicted congestion.</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://github.com/aryannaresh04/Bangalore-Traffic-Prediction"><i class="fab fa-github"></i> GitHub</a>
+                    </div>
                 </div>
                 <div class="project-card animate__animated">
                     <h3>Resume Improvement &amp; Job Scraper Agent</h3>
                     <p class="project-stack">Python &middot; FastAPI &middot; spaCy &middot; Gemini LLM &middot; Next.js</p>
-                    <p>Full-stack resume agent that parses PDF/DOCX resumes with spaCy, scores skill match against a job description, uses the Gemini LLM to rewrite bullets and draft cover letters, and scrapes matching jobs by skillset via JobSpy.</p>
+                    <ul class="project-points">
+                        <li>Parses PDF/DOCX resumes with spaCy and scores skill match against a job description.</li>
+                        <li>Uses the Gemini LLM to rewrite bullets and draft cover letters.</li>
+                        <li>Scrapes matching jobs by skillset via JobSpy.</li>
+                    </ul>
                     <div class="project-links">
                         <a href="https://github.com/aryannaresh04/resume-improvement-job-scrapper"><i class="fab fa-github"></i> GitHub</a>
                     </div>
@@ -115,12 +166,20 @@
                 <div class="project-card animate__animated">
                     <h3>Hybrid Encryption System</h3>
                     <p class="project-stack">Python &middot; AES-256-GCM &middot; Shamir's Secret Sharing</p>
-                    <p>File-encryption tool pairing AES-256-GCM authenticated encryption (256-bit key, per-file nonce) with Shamir's Secret Sharing for key protection. Splits the AES key into a 3-of-5 threshold share set distributed as QR codes, so any three of five shares reconstruct the key and no single share reveals it.</p>
+                    <ul class="project-points">
+                        <li>File encryption with AES-256-GCM authenticated encryption (256-bit key, per-file nonce).</li>
+                        <li>Splits the AES key into a 3-of-5 Shamir's Secret Sharing set distributed as QR codes.</li>
+                        <li>Any three shares reconstruct the key; no single share reveals it.</li>
+                    </ul>
                 </div>
                 <div class="project-card animate__animated">
                     <h3>Blockchain-Based QR Code Product Authentication</h3>
                     <p class="project-stack">Solidity &middot; Truffle &middot; Ganache &middot; Web3.js &middot; Node.js &middot; MetaMask</p>
-                    <p>Anti-counterfeiting system that registers products on an Ethereum blockchain and verifies authenticity by scanning QR codes against on-chain records. Built with Solidity smart contracts deployed via Truffle to a Ganache local chain, with a Web3.js frontend and MetaMask wallet integration for transaction signing.</p>
+                    <ul class="project-points">
+                        <li>Anti-counterfeiting system that registers products on Ethereum and verifies authenticity by scanning QR codes against on-chain records.</li>
+                        <li>Solidity smart contracts deployed via Truffle to a Ganache local chain.</li>
+                        <li>Web3.js frontend with MetaMask integration for transaction signing.</li>
+                    </ul>
                     <div class="project-links">
                         <a href="https://github.com/aryannaresh04/Blockchain-Based-QR-Code-Product-Authentication"><i class="fab fa-github"></i> GitHub</a>
                     </div>
@@ -128,7 +187,11 @@
                 <div class="project-card animate__animated">
                     <h3>Qt Serial Port Tool with Live Data Visualization</h3>
                     <p class="project-stack">C++ &middot; Qt Widgets &middot; QSerialPort &middot; Qt Charts &middot; socat</p>
-                    <p>Desktop tool for real-time communication with serial devices: live incoming data plotted with Qt Charts, timestamped logging to file, pre-transfer handshaking, and socat-based virtual ports for hardware-free testing. Built during my CoreEL internship.</p>
+                    <ul class="project-points">
+                        <li>Desktop tool for real-time serial device communication, built during my CoreEL internship.</li>
+                        <li>Live data plotting with Qt Charts, timestamped file logging, and pre-transfer handshaking.</li>
+                        <li>socat-based virtual ports for hardware-free testing.</li>
+                    </ul>
                     <div class="project-links">
                         <a href="https://github.com/aryannaresh04/QT-Serial-Port-with-Live-Data-Visualization-App"><i class="fab fa-github"></i> GitHub</a>
                     </div>
@@ -136,7 +199,10 @@
                 <div class="project-card animate__animated">
                     <h3>Personal Portfolio Website</h3>
                     <p class="project-stack">HTML &middot; CSS &middot; JavaScript</p>
-                    <p>This site: a responsive single-page portfolio with scroll-driven animations, an auto-highlighting sticky navbar, and a card-based layout, built from scratch with no frameworks.</p>
+                    <ul class="project-points">
+                        <li>This site: a responsive single-page portfolio built from scratch with no frameworks.</li>
+                        <li>Scroll-driven animations, an auto-highlighting sticky navbar, and a card-based layout.</li>
+                    </ul>
                     <div class="project-links">
                         <a href="https://github.com/aryannaresh04/Personal-Portfolio"><i class="fab fa-github"></i> GitHub</a>
                     </div>
@@ -153,6 +219,7 @@
                 <h3 class="institution">Vellore Institute of Technology</h3>
                 <p class="date">2023 - 2027</p>
                 <p>B.Tech Computer Science &amp; Engineering, specialization in Information Security &middot; CGPA: 8.16</p>
+                <p>Coursework: Data Structures &amp; Algorithms, OOP, Operating Systems, Networks, DBMS, Cryptography, Web Security</p>
             </div>
             <div class="education-item animate__animated">
                 <h3 class="institution">Delhi Public School, Bangalore North</h3>
@@ -180,6 +247,7 @@
                         <li>C</li>
                         <li>C++</li>
                         <li>JavaScript</li>
+                        <li>TypeScript</li>
                         <li>HTML/CSS</li>
                         <li>QML</li>
                         <li>SQL</li>
@@ -194,6 +262,10 @@
                         <li>Flask</li>
                         <li>FastAPI</li>
                         <li>Qt</li>
+                        <li>SQLAlchemy</li>
+                        <li>PyTorch</li>
+                        <li>Hugging Face</li>
+                        <li>scikit-learn</li>
                         <li>Pandas</li>
                         <li>NumPy</li>
                     </ul>
@@ -202,13 +274,16 @@
                     <h3>Tools &amp; Technologies</h3>
                     <ul>
                         <li>Git/GitHub</li>
+                        <li>Docker</li>
+                        <li>Linux</li>
+                        <li>CMake</li>
+                        <li>PostgreSQL</li>
                         <li>MySQL</li>
+                        <li>SQLite</li>
                         <li>Qt Design Studio</li>
                         <li>PyInstaller</li>
                         <li>Mendix</li>
                         <li>AWS Cloud</li>
-                        <li>Wireshark</li>
-                        <li>Metasploit</li>
                     </ul>
                 </div>
                 <div class="skill-category animate__animated">
@@ -219,6 +294,12 @@
                         <li>Network Security</li>
                         <li>Data Privacy</li>
                         <li>Penetration Testing</li>
+                        <li>Malware Analysis</li>
+                        <li>Wireshark</li>
+                        <li>Metasploit</li>
+                        <li>Kali Linux</li>
+                        <li>IDA Pro</li>
+                        <li>OllyDbg</li>
                     </ul>
                 </div>
             </div>
