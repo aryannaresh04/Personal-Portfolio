@@ -1,2 +1,7 @@
 .DS_Store
 Profile Pic.jpg
+
+# Agent skills (local tooling, not part of the site)
+.agents/
+.claude/
+skills-lock.json

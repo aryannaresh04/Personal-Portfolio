@@ -2,246 +2,381 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Aryan Naresh</title>
+    <meta name="description" content="Aryan Naresh: Software Engineer, SDE Intern @ Siemens, CS @ VIT.">
+    <meta name="theme-color" content="#09090b">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2309090b'/%3E%3Cg fill='%235effa0'%3E%3Crect x='14' y='6' width='4' height='4'/%3E%3Crect x='10' y='11' width='4' height='4'/%3E%3Crect x='18' y='11' width='4' height='4'/%3E%3Crect x='8' y='16' width='16' height='4'/%3E%3Crect x='6' y='21' width='4' height='5'/%3E%3Crect x='22' y='21' width='4' height='5'/%3E%3C/g%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Doto:wght@400..900&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="topnav" id="myTopnav">
-        <div class="nav-container">
-            <a href="#" class="logo-link">Aryan's Portfolio</a>
-            <div class="nav-links">
-                <a href="#about" class="tablink">About Me</a>
-                <a href="#experience" class="tablink">Experience</a>
-                <a href="#projects" class="tablink">Projects</a>
-                <a href="#education" class="tablink">Education</a>
-                <a href="#skills" class="tablink">Skills</a>
-                <a href="#achievements" class="tablink">Achievements</a>
-            </div>
+    <!-- Entry sequence: holds until the fonts are ready, then splits open -->
+    <div id="boot" aria-hidden="true">
+        <div class="boot-d boot-t"></div>
+        <div class="boot-d boot-b"></div>
+        <div class="boot-c">
+            <span class="label">aryan-naresh / loading</span>
+            <b id="boot-n">000</b>
+            <span class="boot-bar"><i id="boot-bar"></i></span>
         </div>
-    </nav>
+    </div>
+    <div id="grain" aria-hidden="true"></div>
+    <div id="cur" aria-hidden="true"></div>
+    <canvas id="field" aria-hidden="true"></canvas>
+    <div id="progress" aria-hidden="true"></div>
+    <a class="skip" href="#projects">Skip to projects</a>
 
-    <!-- Header Section -->
-    <header>
-        <canvas id="hero-particles" aria-hidden="true"></canvas>
-        <div class="header-left">
-            <img src="pfp.jpg" alt="Aryan Naresh profile photo" class="profile-image">
-        </div>
-        <div class="header-right">
-            <h1>Aryan Naresh</h1>
-            <p><span id="typed-tagline"></span><span class="typing-cursor" aria-hidden="true"></span><span class="sr-only">Software Engineer | SDE Intern @ Siemens | CS @ VIT</span></p>
-            <div class="hero-cta">
-                <a href="#projects" class="btn btn-primary">View Projects</a>
-                <a href="mailto:aryannaresh04@gmail.com" class="btn btn-secondary">Contact Me</a>
-            </div>
-            <div class="social-links">
-                <a href="https://github.com/aryannaresh04"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/aryan-naresh/"><i class="fab fa-linkedin"></i></a>
-                <a href="mailto:aryannaresh04@gmail.com"><i class="fas fa-envelope"></i></a>
+    <div class="page">
+    <!-- Navigation -->
+    <header class="nav" id="nav">
+        <div class="wrap nav-in">
+            <a class="brand" href="#top">Aryan Naresh</a>
+            <nav class="nav-links" aria-label="Sections">
+                <a href="#about">About Me</a>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Projects</a>
+                <a href="#education">Education</a>
+                <a href="#skills">Skills</a>
+                <a href="#achievements">Achievements</a>
+            </nav>
+            <div class="nav-r">
+                <button class="kbd-btn" id="pal-open" type="button" data-magnetic aria-label="Open command menu">Menu <kbd id="pal-key">⌘K</kbd></button>
+                <a class="btn solid sm" href="https://github.com/aryannaresh04" target="_blank" rel="noopener" data-magnetic>GitHub <span aria-hidden="true">↗</span></a>
             </div>
         </div>
     </header>
 
-    <!-- About Section -->
-    <section id="about">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <p>I'm Aryan Naresh, a Computer Science engineer specializing in Information Security at VIT Vellore. From May to July 2026, I was a Software Development Engineering Intern on the PLM team at Siemens Digital Industries Software, where I built and shipped a monitoring tool to a live enterprise client. I build backend tools and services that are meant to run in production, not just demo well: real-time monitoring over Server-Sent Events, dependency-graph failure analysis, and hardening tools against penetration-test findings for air-gapped client deployments.<br><br>
-
-                My projects range from systems programming and ML-driven security to applied cryptography and blockchain. I built cachedb, a Redis-compatible persistent key-value store in C++ with a write-ahead log and LSM-tree engine that matches real Redis on durable writes; a ticket booking platform that prevents double-booking with atomic seat holds; and I'm currently researching multilingual scam detection with explainable transformers across 23 languages. I also built a SOC-style network intrusion detector that layers Random Forest and Isolation Forest models behind a FastAPI triage dashboard, a file-encryption tool pairing AES-256-GCM with Shamir's Secret Sharing for threshold key recovery, and an anti-counterfeiting system that verifies products against Ethereum smart contracts via QR codes. Beyond that, I ship products end to end: React/Vite frontends, Node.js and FastAPI backends, ML microservices, and an LLM-powered resume agent that rewrites bullets and scrapes matching jobs.<br><br>
-
-                Before Siemens, I was a Software Development Engineering Intern at CoreEL Technologies, building Qt/C++ flight instrument interfaces and a 3D aircraft simulator, plus a serial-port diagnostics tool with live data visualization.<br><br>
-
-                I'm looking for SDE and security engineering roles where I can keep shipping systems that hold up under real-world constraints.
+    <main id="top">
+    <!-- Hero -->
+    <section class="hero">
+        <div class="wrap hero-in">
+            <div class="hero-copy">
+                <p class="label hero-k rise" style="--d:0"><span class="sq" aria-hidden="true"></span>Portfolio</p>
+                <h1 id="title" aria-label="Aryan Naresh">
+                    <span class="ln" data-split aria-hidden="true">Aryan</span>
+                    <span class="ln" data-split aria-hidden="true">Naresh</span>
+                </h1>
+                <p class="tagline rise" style="--d:3"><span aria-hidden="true">&gt;&nbsp;</span><span id="typed-tagline" aria-hidden="true"></span><span class="typing-cursor" aria-hidden="true"></span><span class="sr-only">Software Engineer | SDE Intern @ Siemens | CS @ VIT</span></p>
+                <div class="hero-cta rise" style="--d:4">
+                    <a href="#projects" class="btn solid" data-magnetic>View Projects <span class="arr" aria-hidden="true">→</span></a>
+                    <a href="mailto:aryannaresh04@gmail.com" class="btn" data-magnetic>Contact Me</a>
+                </div>
+                <p class="reach rise" style="--d:5">
+                    <a href="https://github.com/aryannaresh04" target="_blank" rel="noopener">github.com/aryannaresh04</a>
+                    <a href="https://www.linkedin.com/in/aryan-naresh/" target="_blank" rel="noopener">linkedin.com/in/aryan-naresh</a>
+                    <button class="copy-mail" type="button" data-email="aryannaresh04@gmail.com" title="Copy email address">aryannaresh04@gmail.com</button>
                 </p>
+                <p class="hint rise" style="--d:7">The board behind the page reacts to you. Move near a chip, or click one to overclock it.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="sec" id="about">
+        <div class="wrap">
+            <div class="sec-h">
+                <h2><span class="num" aria-hidden="true">01</span>About Me</h2>
+            </div>
+            <div class="panel about reveal">
+                <div class="factr">
+                    <span class="label">Now</span>
+                    <p>I'm Aryan Naresh, a Computer Science engineer specializing in Information Security at VIT Vellore. From May to July 2026, I was a Software Development Engineering Intern on the PLM team at Siemens Digital Industries Software, where I built and shipped a monitoring tool to a live enterprise client. I build backend tools and services that are meant to run in production, not just demo well: real-time monitoring over Server-Sent Events, dependency-graph failure analysis, and hardening tools against penetration-test findings for air-gapped client deployments.</p>
+                </div>
+                <div class="factr">
+                    <span class="label">Projects</span>
+                    <p>My projects range from systems programming and ML-driven security to applied cryptography and blockchain. I built cachedb, a Redis-compatible persistent key-value store in C++ with a write-ahead log and LSM-tree engine that matches real Redis on durable writes; a ticket booking platform that prevents double-booking with atomic seat holds; and I'm currently researching multilingual scam detection with explainable transformers across 23 languages. I also built a SOC-style network intrusion detector that layers Random Forest and Isolation Forest models behind a FastAPI triage dashboard, a file-encryption tool pairing AES-256-GCM with Shamir's Secret Sharing for threshold key recovery, and an anti-counterfeiting system that verifies products against Ethereum smart contracts via QR codes. Beyond that, I ship products end to end: React/Vite frontends, Node.js and FastAPI backends, ML microservices, and an LLM-powered resume agent that rewrites bullets and scrapes matching jobs.</p>
+                </div>
+                <div class="factr">
+                    <span class="label">Before</span>
+                    <p>Before Siemens, I was a Software Development Engineering Intern at CoreEL Technologies, building Qt/C++ flight instrument interfaces and a 3D aircraft simulator, plus a serial-port diagnostics tool with live data visualization.</p>
+                </div>
+                <div class="factr">
+                    <span class="label">Next</span>
+                    <p><b>I'm looking for SDE and security engineering roles where I can keep shipping systems that hold up under real-world constraints.</b></p>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Experience Section -->
-    <section id="experience">
-        <div class="container">
-            <h2 class="section-title">Experience</h2>
-            <div class="experience-item animate__animated">
-                <h3 class="company">Siemens Digital Industries Software | SDE Intern, PLM Division</h3>
-                <p class="date">May 2026 - July 2026</p>
-                <ul>
-                    <li>Built and shipped TC Monitor, a Python/FastAPI single-executable tool, to a live enterprise client, cutting Teamcenter service-failure detection from ~5 minutes of manual polling to near-instant by streaming live health for ~75 services across 5 servers over Server-Sent Events.</li>
-                    <li>Fixed a client-reported startup failure, cutting startup from 21.7s to 1.1s by moving a service scan that blocked for 15&ndash;22s out of the code that ran before the server started accepting connections.</li>
-                    <li>Scaled it into a fleet console managing every registered server from one dashboard, with environment comparison and a 71-edge dependency map, so one failed service immediately shows what else it takes down.</li>
-                    <li>Fixed 3 black-box penetration test findings before client deployment (capping list sizes and rejecting duplicates to stop unbounded growth, validating request bodies, and taking the API schema docs offline).</li>
-                </ul>
+    <section class="sec" id="experience">
+        <div class="wrap">
+            <div class="sec-h">
+                <h2><span class="num" aria-hidden="true">02</span>Experience</h2>
             </div>
-            <div class="experience-item animate__animated">
-                <h3 class="company">CoreEL Technologies | SDE Intern, Embedded Application Engineering</h3>
-                <p class="date">May 2025 - July 2025</p>
-                <ul>
-                    <li>Designed flight display interfaces in Figma and Qt Design Studio, then built them in Qt (C++/QML): a 5-instrument 2D navigation panel that replays recorded flight data, and a 3D flight instrument simulation.</li>
-                    <li>Built a Qt (C++) serial console that plots and logs incoming data live, reassembling partial reads so no message is cut in half, and tested it without hardware using virtual serial ports.</li>
-                </ul>
-            </div>
+
+            <article class="panel case reveal">
+                <div class="case-t">
+                    <div class="meta-row"><span class="label">May 2026 - July 2026</span><span class="pill">Shipped to a live client</span></div>
+                    <h3>SDE Intern, PLM Division</h3>
+                    <p class="org">Siemens Digital Industries Software</p>
+                    <ul class="pts">
+                        <li>Built and shipped TC Monitor, a Python/FastAPI single-executable tool, to a live enterprise client, cutting Teamcenter service-failure detection from ~5 minutes of manual polling to near-instant by streaming live health for ~75 services across 5 servers over Server-Sent Events.</li>
+                        <li>Fixed a client-reported startup failure, cutting startup from 21.7s to 1.1s by moving a service scan that blocked for 15&ndash;22s out of the code that ran before the server started accepting connections.</li>
+                        <li>Scaled it into a fleet console managing every registered server from one dashboard, with environment comparison and a 71-edge dependency map, so one failed service immediately shows what else it takes down.</li>
+                        <li>Fixed 3 black-box penetration test findings before client deployment (capping list sizes and rejecting duplicates to stop unbounded growth, validating request bodies, and taking the API schema docs offline).</li>
+                    </ul>
+                </div>
+                <div class="case-v">
+                    <div class="case-vh"><span class="label">TC Monitor</span><span class="label acc">By the numbers</span></div>
+                    <div class="figs tall">
+                        <div class="fig wide"><b>~5 min <i>→</i> near-instant</b><span>Teamcenter service-failure detection</span></div>
+                        <div class="fig"><b>21.7s <i>→</i> 1.1s</b><span>Startup time</span></div>
+                        <div class="fig"><b>~75</b><span>Services streamed live across 5 servers</span></div>
+                        <div class="fig"><b>71</b><span>Edges in the dependency map</span></div>
+                        <div class="fig"><b>3</b><span>Penetration test findings fixed before deployment</span></div>
+                    </div>
+                </div>
+                <div class="toy" data-toy="monitor"></div>
+            </article>
+
+            <article class="panel case reveal">
+                <div class="case-t">
+                    <div class="meta-row"><span class="label">May 2025 - July 2025</span></div>
+                    <h3>SDE Intern, Embedded Application Engineering</h3>
+                    <p class="org">CoreEL Technologies</p>
+                    <ul class="pts">
+                        <li>Designed flight display interfaces in Figma and Qt Design Studio, then built them in Qt (C++/QML): a 5-instrument 2D navigation panel that replays recorded flight data, and a 3D flight instrument simulation.</li>
+                        <li>Built a Qt (C++) serial console that plots and logs incoming data live, reassembling partial reads so no message is cut in half, and tested it without hardware using virtual serial ports.</li>
+                    </ul>
+                </div>
+                <div class="case-v">
+                    <div class="case-vh"><span class="label">Flight displays</span><span class="label acc">By the numbers</span></div>
+                    <div class="figs tall">
+                        <div class="fig"><b>5</b><span>Instruments in the 2D navigation panel</span></div>
+                        <div class="fig"><b>3D</b><span>Flight instrument simulation</span></div>
+                        <div class="fig wide"><b>Live</b><span>Serial data plotted and logged, tested on virtual serial ports</span></div>
+                    </div>
+                </div>
+                <div class="toy" data-toy="flight"></div>
+            </article>
         </div>
     </section>
 
     <!-- Projects Section -->
-    <section id="projects">
-        <div class="container">
-            <h2 class="section-title">Projects</h2>
-            <div class="project-grid">
-                <div class="project-card animate__animated">
-                    <h3>cachedb: Redis-Compatible Persistent Key-Value Store</h3>
-                    <p class="project-stack">C++17 &middot; Linux &middot; epoll &middot; CMake &middot; Docker</p>
-                    <ul class="project-points">
-                        <li>Built from scratch in C++; speaks the Redis wire protocol, so stock redis-cli and redis-benchmark run against it unmodified.</li>
-                        <li>Write-ahead log + LSM-tree storage engine: zero confirmed writes lost across 10 mid-write crash tests.</li>
-                        <li>Batched disk syncs (group commit) to make durable writes 22&times; faster (2,058 &rarr; 45,249 ops/sec), on par with real Redis.</li>
-                        <li>Size-tiered compaction cut files checked per lookup from 303 to 9, boosting read throughput 3.2&times;.</li>
-                    </ul>
-                    <div class="project-links">
-                        <a href="https://github.com/aryannaresh04/cachedb"><i class="fab fa-github"></i> GitHub</a>
+    <section class="sec" id="projects">
+        <div class="wrap">
+            <div class="sec-h">
+                <h2><span class="num" aria-hidden="true">03</span>Projects</h2>
+            </div>
+            <nav class="jump" aria-label="Project index">
+                <span>Jump to</span>
+                <a href="#p-cachedb">cachedb</a>
+                <a href="#p-nids">Intrusion detector</a>
+                <a href="#p-tickets">Ticket booking</a>
+                <a href="#p-scam">Scam detection</a>
+                <a href="#p-traffic">Traffic prediction</a>
+                <a href="#p-resume">Resume agent</a>
+                <a href="#p-encryption">Hybrid encryption</a>
+                <a href="#p-blockchain">Blockchain QR</a>
+                <a href="#p-serial">Qt serial tool</a>
+                <a href="#p-portfolio">This site</a>
+            </nav>
+
+            <div class="grid2">
+                <article class="panel card feat reveal" id="p-cachedb">
+                    <div class="feat-t">
+                        <div class="meta-row"><span class="label">01</span></div>
+                        <h3>cachedb: Redis-Compatible Persistent Key-Value Store</h3>
+                        <ul class="pts">
+                            <li>Built from scratch in C++; speaks the Redis wire protocol, so stock redis-cli and redis-benchmark run against it unmodified.</li>
+                            <li>Write-ahead log + LSM-tree storage engine: zero confirmed writes lost across 10 mid-write crash tests.</li>
+                            <li>Batched disk syncs (group commit) to make durable writes 22&times; faster (2,058 &rarr; 45,249 ops/sec), on par with real Redis.</li>
+                            <li>Size-tiered compaction cut files checked per lookup from 303 to 9, boosting read throughput 3.2&times;.</li>
+                        </ul>
+                        <div class="figs">
+                            <div class="fig"><b>22&times;</b><span>Faster durable writes</span></div>
+                            <div class="fig"><b>0</b><span>Writes lost in 10 crash tests</span></div>
+                            <div class="fig"><b>303 <i>→</i> 9</b><span>Files checked per lookup</span></div>
+                            <div class="fig"><b>3.2&times;</b><span>Read throughput</span></div>
+                        </div>
+                        <ul class="tags"><li>C++17</li><li>Linux</li><li>epoll</li><li>CMake</li><li>Docker</li></ul>
+                        <div class="links"><a class="tlink" href="https://github.com/aryannaresh04/cachedb" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a></div>
                     </div>
-                </div>
-                <div class="project-card animate__animated">
-                    <h3>Network Intrusion and Traffic Anomaly Detector</h3>
-                    <p class="project-stack">Python &middot; scikit-learn &middot; FastAPI &middot; NSL-KDD</p>
-                    <ul class="project-points">
-                        <li>Raised detection of unseen attack types on NSL-KDD from 14.5% to 62.9% by pairing a Random Forest with an Isolation Forest trained only on normal traffic.</li>
-                        <li>FastAPI triage dashboard that ranks alerts by severity and keeps analysts' progress through restarts.</li>
-                        <li>Locking so two analysts can't overwrite each other's work.</li>
-                    </ul>
-                    <div class="project-links">
-                        <a href="https://github.com/aryannaresh04/Network-Intrusion-Detection"><i class="fab fa-github"></i> GitHub</a>
+                    <div class="toy" data-toy="wal"></div>
+                </article>
+
+                <article class="panel card feat reveal" id="p-nids">
+                    <div class="feat-t">
+                        <div class="meta-row"><span class="label">02</span></div>
+                        <h3>Network Intrusion and Traffic Anomaly Detector</h3>
+                        <ul class="pts">
+                            <li>Raised detection of unseen attack types on NSL-KDD from 14.5% to 62.9% by pairing a Random Forest with an Isolation Forest trained only on normal traffic.</li>
+                            <li>FastAPI triage dashboard that ranks alerts by severity and keeps analysts' progress through restarts.</li>
+                            <li>Locking so two analysts can't overwrite each other's work.</li>
+                        </ul>
+                        <div class="figs">
+                            <div class="fig"><b>14.5% <i>→</i> 62.9%</b><span>Detection of unseen attack types on NSL-KDD</span></div>
+                        </div>
+                        <ul class="tags"><li>Python</li><li>scikit-learn</li><li>FastAPI</li><li>NSL-KDD</li></ul>
+                        <div class="links"><a class="tlink" href="https://github.com/aryannaresh04/Network-Intrusion-Detection" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a></div>
                     </div>
-                </div>
-                <div class="project-card animate__animated">
+                    <div class="toy" data-toy="nids"></div>
+                </article>
+
+                <article class="panel card feat reveal" id="p-tickets">
+                    <div class="feat-t">
+                        <div class="meta-row"><span class="label">03</span></div>
+                        <h3>Ticket Booking Platform</h3>
+                        <ul class="pts">
+                            <li>Prevents double-booking with one atomic SQL update per seat hold; hold expiry is checked on every write, so it stays correct even if cleanup fails.</li>
+                            <li>Time-limited waitlist for freed seats, a live seat map over SSE, and JWT-signed QR tickets.</li>
+                            <li>88 unit and integration tests on real PostgreSQL, verified with mutation testing.</li>
+                        </ul>
+                        <div class="figs">
+                            <div class="fig"><b>88</b><span>Unit and integration tests</span></div>
+                            <div class="fig"><b>1</b><span>Atomic SQL update per seat hold</span></div>
+                        </div>
+                        <ul class="tags"><li>Python</li><li>FastAPI</li><li>PostgreSQL</li><li>SQLAlchemy</li><li>React</li><li>TypeScript</li></ul>
+                        <div class="links"><a class="tlink" href="https://github.com/aryannaresh04/ticket-booking-platform" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a></div>
+                    </div>
+                    <div class="toy" data-toy="seats"></div>
+                </article>
+
+                <article class="panel card reveal" id="p-scam">
+                    <div class="meta-row"><span class="label">04</span><span class="pill acc">Ongoing research</span></div>
                     <h3>Multilingual Scam Detection with Explainable Transformers</h3>
-                    <p class="project-stack">PyTorch &middot; XLM-R &middot; MuRIL &middot; SHLIME</p>
-                    <ul class="project-points">
+                    <ul class="pts">
                         <li>Ongoing research (2026 &ndash; present): fine-tuning XLM-R and MuRIL to detect scam messages across 23 languages.</li>
                         <li>Benchmarked against mBERT and a TF-IDF + SVM baseline, with results broken down by Hindi&ndash;English code-mixing.</li>
                         <li>Designing an attack that makes LIME, SHAP, and SHLIME point to the wrong words while the model still flags the scam.</li>
                     </ul>
-                </div>
-                <div class="project-card animate__animated">
-                    <h3>Ticket Booking Platform</h3>
-                    <p class="project-stack">Python &middot; FastAPI &middot; PostgreSQL &middot; SQLAlchemy &middot; React &middot; TypeScript</p>
-                    <ul class="project-points">
-                        <li>Prevents double-booking with one atomic SQL update per seat hold; hold expiry is checked on every write, so it stays correct even if cleanup fails.</li>
-                        <li>Time-limited waitlist for freed seats, a live seat map over SSE, and JWT-signed QR tickets.</li>
-                        <li>88 unit and integration tests on real PostgreSQL, verified with mutation testing.</li>
-                    </ul>
-                    <div class="project-links">
-                        <a href="https://github.com/aryannaresh04/ticket-booking-platform"><i class="fab fa-github"></i> GitHub</a>
+                    <div class="figs">
+                        <div class="fig"><b>23</b><span>Languages covered</span></div>
+                        <div class="fig"><b>3</b><span>Explainers under attack</span></div>
                     </div>
-                </div>
-                <div class="project-card animate__animated">
+                    <ul class="tags"><li>PyTorch</li><li>XLM-R</li><li>MuRIL</li><li>SHLIME</li></ul>
+                </article>
+
+                <article class="panel card reveal" id="p-traffic">
+                    <div class="meta-row"><span class="label">05</span></div>
                     <h3>Bangalore Traffic Prediction System</h3>
-                    <p class="project-stack">Python &middot; scikit-learn &middot; Flask &middot; Node.js &middot; React/Vite</p>
-                    <ul class="project-points">
+                    <ul class="pts">
                         <li>Full-stack app: React/Vite + Leaflet frontend, Node.js/Express API, and a Python/Flask ML microservice.</li>
                         <li>Random Forest congestion classifier trained on ~8,900 records across 17 features.</li>
                         <li>Congestion-aware route planning with Dijkstra's algorithm over 30 areas, weighting edges by predicted congestion.</li>
                     </ul>
-                    <div class="project-links">
-                        <a href="https://github.com/aryannaresh04/Bangalore-Traffic-Prediction"><i class="fab fa-github"></i> GitHub</a>
+                    <div class="figs">
+                        <div class="fig"><b>~8,900</b><span>Training records</span></div>
+                        <div class="fig"><b>17</b><span>Features</span></div>
+                        <div class="fig"><b>30</b><span>Areas routed</span></div>
                     </div>
-                </div>
-                <div class="project-card animate__animated">
+                    <ul class="tags"><li>Python</li><li>scikit-learn</li><li>Flask</li><li>Node.js</li><li>React/Vite</li></ul>
+                    <div class="links"><a class="tlink" href="https://github.com/aryannaresh04/Bangalore-Traffic-Prediction" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a></div>
+                </article>
+
+                <article class="panel card reveal" id="p-resume">
+                    <div class="meta-row"><span class="label">06</span></div>
                     <h3>Resume Improvement &amp; Job Scraper Agent</h3>
-                    <p class="project-stack">Python &middot; FastAPI &middot; spaCy &middot; Gemini LLM &middot; Next.js</p>
-                    <ul class="project-points">
+                    <ul class="pts">
                         <li>Parses PDF/DOCX resumes with spaCy and scores skill match against a job description.</li>
                         <li>Uses the Gemini LLM to rewrite bullets and draft cover letters.</li>
                         <li>Scrapes matching jobs by skillset via JobSpy.</li>
                     </ul>
-                    <div class="project-links">
-                        <a href="https://github.com/aryannaresh04/resume-improvement-job-scrapper"><i class="fab fa-github"></i> GitHub</a>
-                    </div>
-                </div>
-                <div class="project-card animate__animated">
+                    <ul class="tags"><li>Python</li><li>FastAPI</li><li>spaCy</li><li>Gemini LLM</li><li>Next.js</li></ul>
+                    <div class="links"><a class="tlink" href="https://github.com/aryannaresh04/resume-improvement-job-scrapper" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a></div>
+                </article>
+
+                <article class="panel card reveal" id="p-encryption">
+                    <div class="meta-row"><span class="label">07</span></div>
                     <h3>Hybrid Encryption System</h3>
-                    <p class="project-stack">Python &middot; AES-256-GCM &middot; Shamir's Secret Sharing</p>
-                    <ul class="project-points">
+                    <ul class="pts">
                         <li>File encryption with AES-256-GCM authenticated encryption (256-bit key, per-file nonce).</li>
                         <li>Splits the AES key into a 3-of-5 Shamir's Secret Sharing set distributed as QR codes.</li>
                         <li>Any three shares reconstruct the key; no single share reveals it.</li>
                     </ul>
-                </div>
-                <div class="project-card animate__animated">
+                    <div class="figs">
+                        <div class="fig"><b>256-bit</b><span>AES-GCM key, per-file nonce</span></div>
+                        <div class="fig"><b>3-of-5</b><span>Shamir shares to recover it</span></div>
+                    </div>
+                    <ul class="tags"><li>Python</li><li>AES-256-GCM</li><li>Shamir's Secret Sharing</li></ul>
+                </article>
+
+                <article class="panel card reveal" id="p-blockchain">
+                    <div class="meta-row"><span class="label">08</span></div>
                     <h3>Blockchain-Based QR Code Product Authentication</h3>
-                    <p class="project-stack">Solidity &middot; Truffle &middot; Ganache &middot; Web3.js &middot; Node.js &middot; MetaMask</p>
-                    <ul class="project-points">
+                    <ul class="pts">
                         <li>Anti-counterfeiting system that registers products on Ethereum and verifies authenticity by scanning QR codes against on-chain records.</li>
                         <li>Solidity smart contracts deployed via Truffle to a Ganache local chain.</li>
                         <li>Web3.js frontend with MetaMask integration for transaction signing.</li>
                     </ul>
-                    <div class="project-links">
-                        <a href="https://github.com/aryannaresh04/Blockchain-Based-QR-Code-Product-Authentication"><i class="fab fa-github"></i> GitHub</a>
-                    </div>
-                </div>
-                <div class="project-card animate__animated">
+                    <ul class="tags"><li>Solidity</li><li>Truffle</li><li>Ganache</li><li>Web3.js</li><li>Node.js</li><li>MetaMask</li></ul>
+                    <div class="links"><a class="tlink" href="https://github.com/aryannaresh04/Blockchain-Based-QR-Code-Product-Authentication" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a></div>
+                </article>
+
+                <article class="panel card reveal" id="p-serial">
+                    <div class="meta-row"><span class="label">09</span><span class="pill mute">Built at CoreEL</span></div>
                     <h3>Qt Serial Port Tool with Live Data Visualization</h3>
-                    <p class="project-stack">C++ &middot; Qt Widgets &middot; QSerialPort &middot; Qt Charts &middot; socat</p>
-                    <ul class="project-points">
+                    <ul class="pts">
                         <li>Desktop tool for real-time serial device communication, built during my CoreEL internship.</li>
                         <li>Live data plotting with Qt Charts, timestamped file logging, and pre-transfer handshaking.</li>
                         <li>socat-based virtual ports for hardware-free testing.</li>
                     </ul>
-                    <div class="project-links">
-                        <a href="https://github.com/aryannaresh04/QT-Serial-Port-with-Live-Data-Visualization-App"><i class="fab fa-github"></i> GitHub</a>
-                    </div>
-                </div>
-                <div class="project-card animate__animated">
+                    <ul class="tags"><li>C++</li><li>Qt Widgets</li><li>QSerialPort</li><li>Qt Charts</li><li>socat</li></ul>
+                    <div class="links"><a class="tlink" href="https://github.com/aryannaresh04/QT-Serial-Port-with-Live-Data-Visualization-App" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a></div>
+                </article>
+
+                <article class="panel card reveal" id="p-portfolio">
+                    <div class="meta-row"><span class="label">10</span><span class="pill mute">This site</span></div>
                     <h3>Personal Portfolio Website</h3>
-                    <p class="project-stack">HTML &middot; CSS &middot; JavaScript</p>
-                    <ul class="project-points">
+                    <ul class="pts">
                         <li>This site: a responsive single-page portfolio built from scratch with no frameworks.</li>
                         <li>Scroll-driven animations, an auto-highlighting sticky navbar, and a card-based layout.</li>
                     </ul>
-                    <div class="project-links">
-                        <a href="https://github.com/aryannaresh04/Personal-Portfolio"><i class="fab fa-github"></i> GitHub</a>
-                    </div>
-                </div>
+                    <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
+                    <div class="links"><a class="tlink" href="https://github.com/aryannaresh04/Personal-Portfolio" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a></div>
+                </article>
             </div>
         </div>
     </section>
 
     <!-- Education Section -->
-    <section id="education">
-        <div class="container">
-            <h2 class="section-title">Education</h2>
-            <div class="education-item animate__animated">
-                <h3 class="institution">Vellore Institute of Technology</h3>
-                <p class="date">2023 - 2027</p>
-                <p>B.Tech Computer Science &amp; Engineering, specialization in Information Security &middot; CGPA: 8.16</p>
-                <p>Coursework: Data Structures &amp; Algorithms, OOP, Operating Systems, Networks, DBMS, Cryptography, Web Security</p>
+    <section class="sec" id="education">
+        <div class="wrap">
+            <div class="sec-h">
+                <h2><span class="num" aria-hidden="true">04</span>Education</h2>
             </div>
-            <div class="education-item animate__animated">
-                <h3 class="institution">Delhi Public School, Bangalore North</h3>
-                <p class="date">Graduated 2022</p>
-                <p>12th Grade Science (PCM) &middot; 86.6%</p>
-            </div>
-            <div class="education-item animate__animated">
-                <h3 class="institution">Delhi Public School, Bangalore North</h3>
-                <p class="date">Graduated 2020</p>
-                <p>10th Grade &middot; 91.8%</p>
+            <div class="panel rows reveal">
+                <div class="factr">
+                    <span class="label">2023 - 2027</span>
+                    <div>
+                        <h3 class="row-t">Vellore Institute of Technology</h3>
+                        <p>B.Tech Computer Science &amp; Engineering, specialization in Information Security &middot; CGPA: 8.16</p>
+                        <p class="dim">Coursework: Data Structures &amp; Algorithms, OOP, Operating Systems, Networks, DBMS, Cryptography, Web Security</p>
+                    </div>
+                </div>
+                <div class="factr">
+                    <span class="label">Graduated 2022</span>
+                    <div>
+                        <h3 class="row-t">Delhi Public School, Bangalore North</h3>
+                        <p>12th Grade Science (PCM) &middot; 86.6%</p>
+                    </div>
+                </div>
+                <div class="factr">
+                    <span class="label">Graduated 2020</span>
+                    <div>
+                        <h3 class="row-t">Delhi Public School, Bangalore North</h3>
+                        <p>10th Grade &middot; 91.8%</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Skills Section -->
-    <section id="skills">
-        <div class="container">
-            <h2 class="section-title">Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-category animate__animated">
+    <section class="sec" id="skills">
+        <div class="wrap">
+            <div class="sec-h">
+                <h2><span class="num" aria-hidden="true">05</span>Skills</h2>
+            </div>
+            <div class="panel skills reveal">
+                <div class="skill-category">
                     <h3>Languages</h3>
-                    <ul>
+                    <ul class="sk">
                         <li>Python</li>
                         <li>Java</li>
                         <li>C</li>
@@ -253,9 +388,9 @@
                         <li>SQL</li>
                     </ul>
                 </div>
-                <div class="skill-category animate__animated">
+                <div class="skill-category">
                     <h3>Frameworks &amp; Libraries</h3>
-                    <ul>
+                    <ul class="sk">
                         <li>React</li>
                         <li>Next.js</li>
                         <li>Node.js</li>
@@ -270,9 +405,9 @@
                         <li>NumPy</li>
                     </ul>
                 </div>
-                <div class="skill-category animate__animated">
+                <div class="skill-category">
                     <h3>Tools &amp; Technologies</h3>
-                    <ul>
+                    <ul class="sk">
                         <li>Git/GitHub</li>
                         <li>Docker</li>
                         <li>Linux</li>
@@ -286,9 +421,9 @@
                         <li>AWS Cloud</li>
                     </ul>
                 </div>
-                <div class="skill-category animate__animated">
+                <div class="skill-category">
                     <h3>Security</h3>
-                    <ul>
+                    <ul class="sk">
                         <li>Cryptography (AES, RSA, ECC, Paillier)</li>
                         <li>VAPT</li>
                         <li>Network Security</li>
@@ -306,39 +441,102 @@
         </div>
     </section>
 
-    <section id="achievements" class="animate__animated">
-        <div class="container">
-          <h2 class="section-title">Achievements</h2>
-          <div class="achievements-container">
-            <div class="achievement-item animate__animated">
-              <h3 class="achievement-title">JEE Mains 2023</h3>
-              <p class="date">April 2023</p>
-              <p class="achievement-description">Scored 94th percentile in JEE Mains 2023.</p>
+    <!-- Achievements Section -->
+    <section class="sec" id="achievements">
+        <div class="wrap">
+            <div class="sec-h">
+                <h2><span class="num" aria-hidden="true">06</span>Achievements</h2>
+            </div>
+            <div class="panel wins reveal">
+                <div class="win">
+                    <b class="big">8.0<small>semi-finalist</small></b>
+                    <h3 class="row-t">Flipkart GRiD 8.0 Hackathon</h3>
+                    <p>Semi-finalist in the Flipkart GRiD 8.0 hackathon.</p>
+                </div>
+                <div class="win">
+                    <b class="big">94<small>th percentile</small></b>
+                    <h3 class="row-t">JEE Mains 2023</h3>
+                    <p class="label">April 2023</p>
+                    <p>Scored 94th percentile in JEE Mains 2023.</p>
+                </div>
+                <div class="win">
+                    <b class="big">4041<small>rank</small></b>
+                    <h3 class="row-t">Comedk 2023</h3>
+                    <p class="label">April 2023</p>
+                    <p>Obtained a rank of 4041 in the Comedk Examination, scoring 99%ile in the chemistry section.</p>
+                </div>
+                <div class="win">
+                    <b class="big">6<small>th of 100 teams</small></b>
+                    <h3 class="row-t">F1 in Schools 2019 National Finals: 6th Place</h3>
+                    <p>Qualified for the F1 in Schools National Finals and finished 6th out of 100 teams, also receiving the best team presentation award.</p>
+                </div>
             </div>
 
-            <div class="achievement-item animate__animated">
-              <h3 class="achievement-title">Comedk 2023</h3>
-              <p class="date">April 2023</p>
-              <p class="achievement-description">Obtained a rank of 4041 in the Comedk Examination, scoring 99%ile in the chemistry section.</p>
+            <!-- Contact -->
+            <div class="panel contact reveal" id="contact">
+                <div>
+                    <h2>Contact Me</h2>
+                    <p>I'm looking for SDE and security engineering roles where I can keep shipping systems that hold up under real-world constraints.</p>
+                </div>
+                <div>
+                    <button class="mail copy-mail" type="button" data-email="aryannaresh04@gmail.com">
+                        <span class="label">Copy email address</span>
+                        <b>aryannaresh04@gmail.com</b>
+                        <span aria-hidden="true">⧉</span>
+                    </button>
+                    <div class="side-l">
+                        <a class="btn" href="mailto:aryannaresh04@gmail.com">Write an email</a>
+                        <a class="btn" href="https://www.linkedin.com/in/aryan-naresh/" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a>
+                    </div>
+                </div>
             </div>
-
-              <div class="achievement-item animate__animated">
-                <h3 class="achievement-title">F1 in Schools 2019 National Finals: 6th Place</h3>
-                <p class="achievement-description">Qualified for the F1 in Schools National Finals and finished 6th out of 100 teams, also receiving the best team presentation award.</p>
-              </div>
-          </div>
         </div>
-      </section>
-      
+    </section>
+    </main>
 
     <!-- Footer -->
     <footer>
-        <div class="container">
-            <p>&copy; 2026 Aryan Naresh. All rights reserved.</p>
+        <div class="wrap">
+            <div class="foot">
+                <div>
+                    <a class="brand" href="#top">Aryan Naresh</a>
+                    <p>Software Engineer | SDE Intern @ Siemens | CS @ VIT</p>
+                </div>
+                <div><h4 class="label">Work</h4><ul>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                </ul></div>
+                <div><h4 class="label">Profile</h4><ul>
+                    <li><a href="#about">About Me</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#achievements">Achievements</a></li>
+                </ul></div>
+                <div><h4 class="label">Elsewhere</h4><ul>
+                    <li><a href="https://github.com/aryannaresh04" target="_blank" rel="noopener">GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/in/aryan-naresh/" target="_blank" rel="noopener">LinkedIn</a></li>
+                    <li><a href="mailto:aryannaresh04@gmail.com">Email</a></li>
+                </ul></div>
+            </div>
+            <div class="foot-b label">
+                <span>&copy; 2026 Aryan Naresh. All rights reserved.</span>
+                <a href="#top">Back to top ↑</a>
+            </div>
         </div>
+        <div class="bigname" id="bigname" aria-hidden="true">ARYAN</div>
     </footer>
+    </div>
+
+    <!-- Command menu -->
+    <div id="pal" hidden>
+        <div class="pal-b" role="dialog" aria-modal="true" aria-label="Command menu">
+            <input id="pal-i" type="text" placeholder="Jump to a section or project" aria-label="Search commands" autocomplete="off">
+            <div class="pal-l" id="pal-l" role="listbox"></div>
+        </div>
+    </div>
+    <div id="toast" role="status" aria-live="polite"></div>
 
     <script src="script.js"></script>
+    <script src="toys.js"></script>
 </body>
 </html>
-
